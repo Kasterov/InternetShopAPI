@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InternetShopAPI.Controllers
 {
     [ApiController]
-    [Route("[/api/[controller]")]
+    [Route("/api/[controller]")]
     public class ShopController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -16,11 +16,11 @@ namespace InternetShopAPI.Controllers
             _productService = productService;
         } 
 
-        [HttpGet("api/Products/")]
+        [HttpPost("Products/AddProduct")]
         public IActionResult AddProduct([FromBody] ProductCreateRequest request)
         {
             _productService.addProduct(request);
-            return Ok(new ApiResponce($"All products:"));
+            return Ok(new ApiResponce("Everything is ok"));
         }
     }
 }

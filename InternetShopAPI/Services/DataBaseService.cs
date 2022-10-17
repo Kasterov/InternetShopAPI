@@ -13,9 +13,22 @@ public class DataBaseService : IDataBaseService
         _apiDbContext = apiDbContext;
     }
 
-    public Task addProduct(ProductCreateRequest productRequest)
+    public async Task addProduct(ProductCreateRequest productRequest)
     {
-        throw new NotImplementedException();
+        var product = new Product()
+        {
+            Name = productRequest.Name,
+            Category = productRequest.Category,
+            Atribute = productRequest.Atribute
+        };
+
+        using (_apiDbContext)
+        {
+            await _apiDbContext.AddAsync(product);
+            await _apiDbContext.SaveChangesAsync();
+        }
+        
+        /*throw new NotImplementedException();*/
     }
 
     public Task addProductAtribute(int id, Category category)

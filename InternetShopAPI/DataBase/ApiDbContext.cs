@@ -5,8 +5,7 @@ namespace InternetShopAPI.DataBase;
 
 public class ApiDbContext : DbContext
 {
-    DbSet<Product> products { get; set;}
-
+    public DbSet<Product> products { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite("Data Source=Product.db");

@@ -1,20 +1,20 @@
 ﻿using InternetShopAPI.Controllers.Requests;
+using InternetShopAPI.DataBase;
 using InternetShopAPI.Models;
 
 namespace InternetShopAPI.Services;
 
 public class ProductService : IProductService
 {
+    private readonly IDataBaseService _dataBaseService;
+    public ProductService(IDataBaseService dataBaseService)
+    {
+        _dataBaseService = dataBaseService;
+    }
+
     public async Task addProduct(ProductCreateRequest productRequest)
     {
-        var product = new Product()
-        {
-            Name = productRequest.Name,
-            Category = productRequest.Category,
-            Atribute = productRequest.Atribute
-        };
-
-        
+        await _dataBaseService.addProduct(productRequest);
     }
 
     public Task addProductAtribute(int id, Category category)
