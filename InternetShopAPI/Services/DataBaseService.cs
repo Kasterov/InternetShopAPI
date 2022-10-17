@@ -1,20 +1,21 @@
 ﻿using InternetShopAPI.Controllers.Requests;
+using InternetShopAPI.DataBase;
 using InternetShopAPI.Models;
 
 namespace InternetShopAPI.Services;
 
-public class ProductService : IProductService
+public class DataBaseService : IDataBaseService
 {
-    public async Task addProduct(ProductCreateRequest productRequest)
-    {
-        var product = new Product()
-        {
-            Name = productRequest.Name,
-            Category = productRequest.Category,
-            Atribute = productRequest.Atribute
-        };
+    private readonly ApiDbContext _apiDbContext;
 
-        
+    public DataBaseService(ApiDbContext apiDbContext)
+    {
+        _apiDbContext = apiDbContext;
+    }
+
+    public Task addProduct(ProductCreateRequest productRequest)
+    {
+        throw new NotImplementedException();
     }
 
     public Task addProductAtribute(int id, Category category)
