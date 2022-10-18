@@ -72,9 +72,16 @@ public class ProductService : IProductService
         await _apiDbContext.SaveChangesAsync();
     }
 
-    public Task DeleteProduct(int id)
+    public async Task DeleteProduct(int id)
     {
-        throw new NotImplementedException();
+        if (!await IsProductExist(id))
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+
+        var product = await GetProduct(id);
+        _apiDbContext.Products.Remove(product);
+        await _apiDbContext.SaveChangesAsync();
     }
 
     public Task<Product> GetProductById(int id)
