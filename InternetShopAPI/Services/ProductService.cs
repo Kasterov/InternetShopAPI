@@ -59,9 +59,17 @@ public class ProductService : IProductService
         await _apiDbContext.SaveChangesAsync();
     }
 
-    public Task ChangeProductAtribute(int id, Category category)
+    public async Task ChangeProductAtribute(int id, string atribute)
     {
-        throw new NotImplementedException();
+        if (!await IsProductExist(id))
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+
+        var product = await GetProduct(id);
+
+        product.Atribute = atribute;
+        await _apiDbContext.SaveChangesAsync();
     }
 
     public Task DeleteProduct(int id)
