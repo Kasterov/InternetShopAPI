@@ -6,4 +6,5 @@ public class Product
     public string Name { get; set; }
     public Category Category { get; set; }
     public string? Atribute { get; set; }
+    public uint Quantity { get; set; }
 }

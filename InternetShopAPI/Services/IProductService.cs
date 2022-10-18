@@ -1,15 +1,16 @@
 ﻿using InternetShopAPI.Controllers.Requests;
 using InternetShopAPI.Models;
+using InternetShopAPI.Models.Requests;
 
 namespace InternetShopAPI.Services;
 
 public interface IProductService
 {
-    Task addProduct(ProductCreateRequest productCreateRequest);
-    Task deleteProduct(int id);
-    Task addQuantityProduct(int id);
-    Task changeProductAtribute(int id, Category category);
-    Task addProductAtribute(int id, Category category);
-    Task<List<Product>> getProductsByCategory(Category category);
-    Task<Product> getProductById(int id);
+    Task AddProduct(ProductCreateRequest productCreateRequest);
+    Task DeleteProduct(int id);
+    Task AddQuantityProduct(int id, uint quantity);
+    Task ChangeProductAtribute(int id, Category category);
+    Task AddProductAtribute(int id, string atribute);
+    Task<List<Product>> GetProductsByCategory(Category category);
+    Task<Product> GetProductById(int id);
 }

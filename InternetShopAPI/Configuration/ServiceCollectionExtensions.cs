@@ -9,7 +9,6 @@ public static class ServiceCollectionExtensions
     public static void ConfigureService(this IServiceCollection services)
     {
         services.AddSingleton<ApiDbContext>();
-        services.AddSingleton<IDataBaseService, DataBaseService>();
         services.AddSingleton<IProductService, ProductService>();  
     }
 }

@@ -1,49 +1,89 @@
 ﻿using InternetShopAPI.Controllers.Requests;
 using InternetShopAPI.DataBase;
 using InternetShopAPI.Models;
+using InternetShopAPI.Models.Requests;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternetShopAPI.Services;
 
 public class ProductService : IProductService
 {
-    private readonly IDataBaseService _dataBaseService;
-    public ProductService(IDataBaseService dataBaseService)
+    private readonly ApiDbContext _apiDbContext;
+    public ProductService(ApiDbContext apiDbContext)
     {
-        _dataBaseService = dataBaseService;
+        _apiDbContext = apiDbContext;
     }
 
-    public async Task addProduct(ProductCreateRequest productRequest)
+    public async Task AddProduct(ProductCreateRequest productRequest)
     {
-        await _dataBaseService.addProduct(productRequest);
+        var product = new Product()
+        {
+            Name = productRequest.Name,
+            Category = productRequest.Category,
+            Quantity = productRequest.Quantity,
+            Atribute = productRequest.Atribute
+        };
+
+        await _apiDbContext.Products.AddAsync(product);
+        await _apiDbContext.SaveChangesAsync();
     }
 
-    public Task addProductAtribute(int id, Category category)
+    public async Task AddProductAtribute(int id, string atribute)
+    {
+        if (!await IsProductExist(id))
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+
+        var product = await GetProduct(id);
+
+        if (product.Atribute is not "")
+        {
+            throw new ArgumentNullException();
+        }
+
+        product.Atribute = atribute;
+        await _apiDbContext.SaveChangesAsync();
+    }
+
+    public async Task AddQuantityProduct(int id, uint quantity)
+    {
+        if (!await IsProductExist(id))
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+
+        var product = await GetProduct(id);
+
+        product.Quantity = quantity;
+        await _apiDbContext.SaveChangesAsync();
+    }
+
+    public Task ChangeProductAtribute(int id, Category category)
     {
         throw new NotImplementedException();
     }
 
-    public Task addQuantityProduct(int id)
+    public Task DeleteProduct(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task changeProductAtribute(int id, Category category)
+    public Task<Product> GetProductById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task deleteProduct(int id)
+    public Task<List<Product>> GetProductsByCategory(Category category)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Product> getProductById(int id)
-    {
-        throw new NotImplementedException();
-    }
+    private Task<bool> IsProductExist(int id) =>
+        _apiDbContext.Products
+            .AnyAsync(x => x.Id == id);
 
-    public Task<List<Product>> getProductsByCategory(Category category)
-    {
-        throw new NotImplementedException();
-    }
+    private Task<Product> GetProduct(int id) =>
+        _apiDbContext.Products
+            .SingleAsync(x => x.Id == id);
 }
