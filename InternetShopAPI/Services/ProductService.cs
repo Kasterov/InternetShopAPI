@@ -89,9 +89,19 @@ public class ProductService : IProductService
         throw new NotImplementedException();
     }
 
-    public Task<List<Product>> GetProductsByCategory(Category category)
+    public async Task<List<Product>> GetProductsByCategory(Category category)
     {
-        throw new NotImplementedException();
+        List<Product> products = new List<Product>();
+
+        foreach (var product in _apiDbContext.Products)
+        {
+            if (product.Category == category)
+            {
+                products.Add(product);
+            }
+        }
+
+        return products;
     }
 
     private Task<bool> IsProductExist(int id) =>

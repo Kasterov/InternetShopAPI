@@ -1,4 +1,5 @@
 ﻿namespace InternetShopAPI.Models;
+
 public enum Category
 {
     Home,
@@ -7,4 +8,3 @@ public enum Category
     Car,
     Sport
 }
-
