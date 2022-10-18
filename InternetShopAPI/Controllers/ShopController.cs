@@ -17,13 +17,19 @@ namespace InternetShopAPI.Controllers
             _productService = productService;
         } 
 
-        [HttpPost("Products/AddProduct")]
+        [HttpPost("Products/")]
         public IActionResult AddProduct([FromBody] ProductCreateRequest request)
         {
             _productService.AddProduct(request);
             return Ok(new ApiResponce("Products is added!"));
         }
 
+        [HttpDelete("Products/{id}")]
+        public IActionResult DeleteProduct([FromRoute] int id)
+        {
+            _productService.DeleteProduct(id);
+            return Ok(new ApiResponce("Poducts is deleted!"));
+        }
 
         [HttpPost("Product/{id}/Attribute")]
         public IActionResult AddProductAtribute([FromRoute] int id, string atribute)
@@ -44,13 +50,6 @@ namespace InternetShopAPI.Controllers
         {
             _productService.AddQuantityProduct(id, quantity);
             return Ok(new ApiResponce("Quantity of product is changed!"));
-        }
-
-        [HttpDelete("Products/{id}")]
-        public IActionResult DeleteProduct([FromRoute] int id)
-        {
-            _productService.DeleteProduct(id);
-            return Ok(new ApiResponce("Poducts is deleted!"));
         }
     }
 }
