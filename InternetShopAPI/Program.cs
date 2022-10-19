@@ -12,6 +12,8 @@ var app = builder.Build();
 var context = app.Services.GetRequiredService<ApiDbContext>();
 context.Database.EnsureCreated();
 
+app.UseMiddleware<>;
+
 app
     .UseRouting()
     .UseSwagger()
