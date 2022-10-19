@@ -1,5 +1,6 @@
 using InternetShopAPI.Configuration;
 using InternetShopAPI.DataBase;
+using InternetShopAPI.Middlware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ var app = builder.Build();
 var context = app.Services.GetRequiredService<ApiDbContext>();
 context.Database.EnsureCreated();
 
-app.UseMiddleware<>;
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app
     .UseRouting()

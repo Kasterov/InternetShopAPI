@@ -1,4 +1,7 @@
-﻿namespace InternetShopAPI.Middlware;
+﻿using InternetShopAPI.Extensions;
+using static Microsoft.AspNetCore.Http.StatusCodes;
+
+namespace InternetShopAPI.Middlware;
 
 public class ErrorHandlerMiddleware
 {
@@ -14,9 +17,17 @@ public class ErrorHandlerMiddleware
         {
             await _next(content);
         }
-        catch (Exception)
+        catch (ArgumentOutOfRangeException ex)
         {
-
+            await content.Response
+                .WithStatusCode(Status416RangeNotSatisfiable)
+                .WithJsonContent(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            await content.Response
+                .WithStatusCode(Status400BadRequest)
+                .WithJsonContent(ex.Message);
         }
     }
 }
