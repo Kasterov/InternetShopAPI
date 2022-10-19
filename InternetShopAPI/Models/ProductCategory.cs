@@ -1,5 +1,8 @@
-﻿namespace InternetShopAPI.Models;
+﻿using System.Text.Json.Serialization;
 
+namespace InternetShopAPI.Models;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum Category
 {
     Home,
