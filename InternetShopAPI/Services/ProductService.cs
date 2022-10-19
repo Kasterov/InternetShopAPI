@@ -84,22 +84,30 @@ public class ProductService : IProductService
         await _apiDbContext.SaveChangesAsync();
     }
 
-    public Task<Product> GetProductById(int id)
+    public async Task<Product> GetProductById(int id)
     {
-        throw new NotImplementedException();
+        if (!await IsProductExist(id))
+        {
+            throw new ArgumentOutOfRangeException("No product with such id!");
+        }
+
+        return _apiDbContext.Products.Single(x => x.Id == id);
     }
 
     public async Task<List<Product>> GetProductsByCategory(Category category)
     {
-        List<Product> products = new List<Product>();
 
-        foreach (var product in _apiDbContext.Products)
-        {
-            if (product.Category == category)
+        var products =
+            await _apiDbContext.Products
+            .Where(x => x.Category == category)
+            .Select(x => new Product
             {
-                products.Add(product);
-            }
-        }
+                Id = x.Id,
+                Name = x.Name,
+                Category = x.Category,
+                Atribute = x.Atribute
+            })
+            .ToListAsync();
 
         return products;
     }
