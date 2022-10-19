@@ -1,6 +1,5 @@
 ﻿using InternetShopAPI.Controllers.Requests;
 using InternetShopAPI.Models;
-using InternetShopAPI.Models.Requests;
 
 namespace InternetShopAPI.Services;
 

@@ -1,8 +1,7 @@
 ﻿using InternetShopAPI.Controllers.Requests;
+using Microsoft.EntityFrameworkCore;
 using InternetShopAPI.DataBase;
 using InternetShopAPI.Models;
-using InternetShopAPI.Models.Requests;
-using Microsoft.EntityFrameworkCore;
 
 namespace InternetShopAPI.Services;
 
@@ -96,7 +95,6 @@ public class ProductService : IProductService
 
     public async Task<List<Product>> GetProductsByCategory(Category category)
     {
-
         var products =
             await _apiDbContext.Products
             .Where(x => x.Category == category)

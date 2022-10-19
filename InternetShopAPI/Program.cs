@@ -1,6 +1,5 @@
 using InternetShopAPI.Configuration;
 using InternetShopAPI.DataBase;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

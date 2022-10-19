@@ -1,6 +1,5 @@
 ﻿using InternetShopAPI.DataBase;
 using InternetShopAPI.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace InternetShopAPI.Configuration;
 
