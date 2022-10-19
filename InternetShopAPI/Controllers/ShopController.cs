@@ -19,57 +19,63 @@ public class ShopController : ControllerBase
     } 
 
     [HttpPost("products")]
-    public IActionResult AddProduct([FromBody] ProductCreateRequest request)
+    public async Task<IActionResult> AddProduct([FromBody] ProductCreateRequest request)
     {
-        _productService.AddProduct(request);
+        await _productService.AddProduct(request);
         return Ok(new ApiResponce("Products is added!"));
     }
 
     [HttpDelete("products/{id}")]
-    public IActionResult DeleteProduct([FromRoute] int id)
+    public async Task<IActionResult> DeleteProduct([FromRoute] int id)
     {
-        _productService.DeleteProduct(id);
+        await _productService.DeleteProduct(id);
         return Ok(new ApiResponce("Poducts is deleted!"));
     }
 
     [HttpPost("product/{id}/attribute")]
-    public IActionResult AddProductAtribute(
+    public async Task<IActionResult> AddProductAtribute(
         [FromRoute] int id,
         [FromBody] ProductAddAtributeRequest request)
     {
-        _productService.AddProductAtribute(id, request.Atribute);
+        await _productService.AddProductAtribute(id, request.Atribute);
         return Ok(new ApiResponce("Attribute is added!"));
     }
 
     [HttpPatch("product/{id}/attribute")]
-    public IActionResult ChangeProductAtribute(
+    public async Task<IActionResult> ChangeProductAtribute(
         [FromRoute] int id,
         [FromBody] ProductAddAtributeRequest request)
     {
-        _productService.ChangeProductAtribute(id, request.Atribute);
+        await _productService.ChangeProductAtribute(id, request.Atribute);
         return Ok(new ApiResponce("Attribute is changed!"));
     }
 
     [HttpPost("products/{id}/quantity")]
-    public IActionResult AddQuantityProduct(
+    public async Task<IActionResult> AddQuantityProduct(
         [FromRoute] int id,
         [FromBody] ProductaddQuantityRequest request)
     {
-        _productService.AddQuantityProduct(id, request.Quantity);
+        await _productService.AddQuantityProduct(id, request.Quantity);
         return Ok(new ApiResponce("Quantity of product is changed!"));
     }
 
     [HttpGet("products")]
-    public IActionResult GetProductsByCategory([FromQuery] Category category)
+    public async Task<IActionResult> GetProductsByCategory([FromQuery] Category category)
     {
-        var products = _productService.GetProductsByCategory(category);
+        var products = await _productService.GetProductsByCategory(category);
         return Ok(products);
     }
 
     [HttpGet("products/{id}")]
-    public IActionResult GetProductById([FromRoute] int id)
+    public async Task<IActionResult> GetProductById([FromRoute] int id)
     {
-        var product = _productService.GetProductById(id);
+        var product = await _productService.GetProductById(id);
         return Ok(product);
+    }
+    [HttpGet("test")]
+    public IActionResult Test()
+    {
+        _productService.Test();
+        return Ok("STILL WORKING!");
     }
 }

@@ -36,7 +36,7 @@ public class ProductService : IProductService
 
         var product = await GetProduct(id);
 
-        if (product.Atribute is not "")
+        if (product.Atribute.Length >= 1)
         {
             throw new ArgumentNullException();
         }
@@ -107,6 +107,11 @@ public class ProductService : IProductService
             })
             .ToListAsync();
 
+        if (products.Count == 0)
+        {
+            throw new ArgumentOutOfRangeException("No product with such category!");
+        }
+
         return products;
     }
 
@@ -117,4 +122,9 @@ public class ProductService : IProductService
     private Task<Product> GetProduct(int id) =>
         _apiDbContext.Products
             .SingleAsync(x => x.Id == id);
+
+    public void Test()
+    {
+        throw new ArgumentOutOfRangeException("TEST is working!");
+    }
 }

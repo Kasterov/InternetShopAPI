@@ -17,6 +17,12 @@ public class ErrorHandlerMiddleware
         {
             await _next(content);
         }
+        catch (InvalidDataException ex)
+        {
+            await content.Response
+                .WithStatusCode(Status405MethodNotAllowed)
+                .WithJsonContent(ex.Message);
+        }
         catch (ArgumentOutOfRangeException ex)
         {
             await content.Response
