@@ -31,14 +31,14 @@ public class ProductService : IProductService
     {
         if (!await IsProductExist(id))
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException("No product with such id!");
         }
 
         var product = await GetProduct(id);
 
-        if (product.Atribute.Length >= 1)
+        if (product.Atribute?.Length >= 1)
         {
-            throw new ArgumentNullException();
+            throw new ArgumentNullException("Atribute content is not such as reqiered!");
         }
 
         product.Atribute = atribute;
@@ -49,7 +49,7 @@ public class ProductService : IProductService
     {
         if (!await IsProductExist(id))
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException("No product with such id!");
         }
 
         var product = await GetProduct(id);
@@ -62,7 +62,7 @@ public class ProductService : IProductService
     {
         if (!await IsProductExist(id))
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException("No product with such id!");
         }
 
         var product = await GetProduct(id);
@@ -122,9 +122,4 @@ public class ProductService : IProductService
     private Task<Product> GetProduct(int id) =>
         _apiDbContext.Products
             .SingleAsync(x => x.Id == id);
-
-    public void Test()
-    {
-        throw new ArgumentOutOfRangeException("TEST is working!");
-    }
 }

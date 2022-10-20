@@ -9,5 +9,6 @@ public enum Category
     Work,
     Garden,
     Car,
-    Sport
+    Sport,
+    Count = 5
 }

@@ -12,5 +12,4 @@ public interface IProductService
     Task AddProductAtribute(int id, string atribute);
     Task<List<Product>> GetProductsByCategory(Category category);
     Task<Product> GetProductById(int id);
-    void Test();
 }

@@ -72,10 +72,4 @@ public class ShopController : ControllerBase
         var product = await _productService.GetProductById(id);
         return Ok(product);
     }
-    [HttpGet("test")]
-    public IActionResult Test()
-    {
-        _productService.Test();
-        return Ok("STILL WORKING!");
-    }
 }
