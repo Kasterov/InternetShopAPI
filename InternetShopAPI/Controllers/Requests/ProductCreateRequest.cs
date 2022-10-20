@@ -17,6 +17,6 @@ public class ProductValidator : AbstractValidator<ProductCreateRequest>
         RuleFor(p => p.Name).NotEmpty();
         RuleFor(p => p.Category).IsInEnum();
         RuleFor(p => p.Atribute).NotNull();
-        RuleFor(p => p.Quantity).Must();
+        RuleFor(p => p.Quantity).Must(p => p < 0);
     }
 }   
