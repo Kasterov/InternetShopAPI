@@ -45,7 +45,7 @@ public class ProductService : IProductService
         await _apiDbContext.SaveChangesAsync();
     }
 
-    public async Task AddQuantityProduct(int id, uint quantity)
+    public async Task AddQuantityProduct(int id, ushort quantity)
     {
         if (!await IsProductExist(id))
         {

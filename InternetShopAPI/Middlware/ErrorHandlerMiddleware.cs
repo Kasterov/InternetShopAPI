@@ -29,6 +29,12 @@ public class ErrorHandlerMiddleware
                 .WithStatusCode(Status416RangeNotSatisfiable)
                 .WithJsonContent(ex.Message);
         }
+        catch(ArgumentException ex)
+        {
+            await content.Response
+                .WithStatusCode(Status400BadRequest)
+                .WithJsonContent(ex.Message);
+        }
         catch (Exception ex)
         {
             await content.Response

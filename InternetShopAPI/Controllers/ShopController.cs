@@ -4,6 +4,8 @@ using InternetShopAPI.Models.Requests;
 using InternetShopAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using InternetShopAPI.Models;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace InternetShopAPI.Controllers;
 
@@ -12,15 +14,23 @@ namespace InternetShopAPI.Controllers;
 public class ShopController : ControllerBase
 {
     private readonly IProductService _productService;
-
-    public ShopController(IProductService productService)
+    private readonly IValidator<ProductCreateRequest> _validator;
+    public ShopController(IProductService productService, IValidator<ProductCreateRequest> validator)
     {
         _productService = productService;
+        _validator = validator;
     } 
 
     [HttpPost("products")]
     public async Task<IActionResult> AddProduct([FromBody] ProductCreateRequest request)
     {
+        ValidationResult result = await _validator.ValidateAsync(request);
+
+        if (!result.IsValid)
+        {
+            throw new ArgumentException("Work!");
+        }
+
         await _productService.AddProduct(request);
         return Ok(new ApiResponce("Products is added!"));
     }

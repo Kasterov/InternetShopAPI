@@ -1,7 +1,9 @@
-﻿using InternetShopAPI.DataBase;
+﻿using InternetShopAPI.Controllers.Requests;
+using InternetShopAPI.DataBase;
 using InternetShopAPI.Services;
 using InternetShopAPI.Models;
 using FluentValidation;
+
 
 namespace InternetShopAPI.Configuration;
 
@@ -11,6 +13,6 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<ApiDbContext>();
         services.AddSingleton<IProductService, ProductService>();
-        services.AddScoped<IValidator<Product>,ProductValidator>();
+        services.AddScoped<IValidator<ProductCreateRequest>,ProductValidator>();
     }
 }
