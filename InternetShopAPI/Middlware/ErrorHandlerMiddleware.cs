@@ -41,5 +41,5 @@ public class ErrorHandlerMiddleware
                 .WithStatusCode(Status400BadRequest)
                 .WithJsonContent(ex.Message);
         }
-    }
+     }
 }
