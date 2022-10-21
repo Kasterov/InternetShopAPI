@@ -3,6 +3,7 @@ using InternetShopAPI.DataBase;
 using InternetShopAPI.Services;
 using FluentValidation;
 using InternetShopAPI.Controllers.Requests.Validators;
+using InternetShopAPI.Models.Requests;
 
 namespace InternetShopAPI.Configuration;
 

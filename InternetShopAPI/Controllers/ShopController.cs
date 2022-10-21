@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using InternetShopAPI.Models;
 using FluentValidation;
 using FluentValidation.Results;
+using InternetShopAPI.Controllers.Requests.Validators;
 
 namespace InternetShopAPI.Controllers;
 
@@ -14,23 +15,20 @@ namespace InternetShopAPI.Controllers;
 public class ShopController : ControllerBase
 {
     private readonly IProductService _productService;
-    private readonly IValidator<ProductCreateRequest> _validator;
-    public ShopController(IProductService productService, IValidator<ProductCreateRequest> validator)
+    public ShopController(IProductService productService)
     {
         _productService = productService;
-        _validator = validator;
     } 
 
     [HttpPost("products")]
-    public async Task<IActionResult> AddProduct([FromBody] ProductCreateRequest request)
+    public async Task<IActionResult> AddProduct([FromBody] ProductCreateRequest request, [FromServices] IValidator<ProductCreateRequest> _validator)
     {
         ValidationResult result = await _validator.ValidateAsync(request);
 
         if (!result.IsValid)
         {
-            throw new ArgumentException("Work!");
+            throw new Exception("SUKA!");
         }
-
         await _productService.AddProduct(request);
         return Ok(new ApiResponce("Products is added!"));
     }
@@ -45,8 +43,16 @@ public class ShopController : ControllerBase
     [HttpPost("product/{id}/attribute")]
     public async Task<IActionResult> AddProductAtribute(
         [FromRoute] int id,
-        [FromBody] ProductAddAtributeRequest request)
+        [FromBody] ProductAddAtributeRequest request,
+        [FromServices] IValidator<ProductAddAtributeRequest> _validator)
     {
+        ValidationResult result = await _validator.ValidateAsync(request);
+
+        if (!result.IsValid)
+        {
+            throw new Exception("SUKA2!");
+        }
+
         await _productService.AddProductAtribute(id, request.Atribute);
         return Ok(new ApiResponce("Attribute is added!"));
     }
