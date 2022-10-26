@@ -36,9 +36,9 @@ public class ProductService : IProductService
 
         var product = await GetProduct(id);
 
-        if (product.Atribute?.Length >= 1)
+        if (product.Atribute != "")
         {
-            throw new ArgumentNullException("Atribute content is not such as reqiered!");
+            throw new ArgumentException("This product already have atribute!");
         }
 
         product.Atribute = atribute;
@@ -66,6 +66,11 @@ public class ProductService : IProductService
         }
 
         var product = await GetProduct(id);
+
+        if (product.Atribute == "")
+        {
+            throw new ArgumentException("This product have NO atribute! Add atribute firstly!");
+        }
 
         product.Atribute = atribute;
         await _apiDbContext.SaveChangesAsync();

@@ -21,14 +21,12 @@ public class ShopController : ControllerBase
     } 
 
     [HttpPost("products")]
-    public async Task<IActionResult> AddProduct([FromBody] ProductCreateRequest request, [FromServices] IValidator<ProductCreateRequest> _validator)
+    public async Task<IActionResult> AddProduct(
+        [FromBody] ProductCreateRequest request, 
+        [FromServices] IValidator<ProductCreateRequest> _validator)
     {
-        ValidationResult result = await _validator.ValidateAsync(request);
+        await _validator.ValidateAndThrowAsync(request);
 
-        if (!result.IsValid)
-        {
-            throw new Exception("SUKA!");
-        }
         await _productService.AddProduct(request);
         return Ok(new ApiResponce("Products is added!"));
     }
@@ -46,12 +44,7 @@ public class ShopController : ControllerBase
         [FromBody] ProductAddAtributeRequest request,
         [FromServices] IValidator<ProductAddAtributeRequest> _validator)
     {
-        ValidationResult result = await _validator.ValidateAsync(request);
-
-        if (!result.IsValid)
-        {
-            throw new Exception("SUKA2!");
-        }
+        await _validator.ValidateAndThrowAsync(request);
 
         await _productService.AddProductAtribute(id, request.Atribute);
         return Ok(new ApiResponce("Attribute is added!"));
@@ -60,8 +53,11 @@ public class ShopController : ControllerBase
     [HttpPatch("product/{id}/attribute")]
     public async Task<IActionResult> ChangeProductAtribute(
         [FromRoute] int id,
-        [FromBody] ProductAddAtributeRequest request)
+        [FromBody] ProductAddAtributeRequest request,
+        [FromServices] IValidator<ProductAddAtributeRequest> _validator)
     {
+        await _validator.ValidateAndThrowAsync(request);
+
         await _productService.ChangeProductAtribute(id, request.Atribute);
         return Ok(new ApiResponce("Attribute is changed!"));
     }
@@ -69,8 +65,10 @@ public class ShopController : ControllerBase
     [HttpPost("products/{id}/quantity")]
     public async Task<IActionResult> AddQuantityProduct(
         [FromRoute] int id,
-        [FromBody] ProductaddQuantityRequest request)
+        [FromBody] ProductaddQuantityRequest request,
+        [FromServices] IValidator<ProductaddQuantityRequest> _validator)
     {
+        await _validator.ValidateAndThrowAsync(request);
         await _productService.AddQuantityProduct(id, request.Quantity);
         return Ok(new ApiResponce("Quantity of product is changed!"));
     }
