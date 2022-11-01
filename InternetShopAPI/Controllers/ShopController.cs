@@ -5,8 +5,6 @@ using InternetShopAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using InternetShopAPI.Models;
 using FluentValidation;
-using FluentValidation.Results;
-using InternetShopAPI.Controllers.Requests.Validators;
 
 namespace InternetShopAPI.Controllers;
 
